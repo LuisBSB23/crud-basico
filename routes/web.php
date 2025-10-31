@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProdutosController;
+use App\Http\Controllers\PedidosController; // Adicionado PedidosController
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\AuthController;
 
@@ -11,12 +12,6 @@ use App\Http\Controllers\AuthController;
 Route::get('/', function () {
     return view('home'); // 'home' é o nome da view da página inicial
 })->name('home');
-
-
-
-
-
-
 
 // Rota para a página de login
 Route::get('/login', function () {
@@ -43,9 +38,25 @@ Route::put('/produtos/{id}', [ProdutosController::class, 'update'])->name('produ
 Route::get('/produtos/delete/{id}', [ProdutosController::class, 'delete'])->name('produtos.delete');
 Route::delete('/produtos/{id}', [ProdutosController::class, 'destroy'])->name('produtos.destroy');
 
+
+// --- Rotas para Pedidos (Adicionadas) ---
+
+Route::get('/pedidos/novo', [PedidosController::class, 'create'])->name('pedidos.create');
+Route::resource('pedidos', PedidosController::class); // Rotas resource
+
+Route::post('/pedidos/novo', [PedidosController::class, 'store'])->name('registrar_pedido');
+Route::get('/pedidos/ver/{id}', [PedidosController::class, 'show'])->name('pedidos.show');
+Route::get('/pedidos/ver/{id}', [PedidosController::class, 'show'])->name('pedidos.ver');
+
+Route::get('/pedidos/editar/{id}', [PedidosController::class, 'edit'])->name('pedidos.edit');
+Route::put('/pedidos/{id}', [PedidosController::class, 'update'])->name('pedidos.update');
+Route::get('/pedidos/delete/{id}', [PedidosController::class, 'delete'])->name('pedidos.delete');
+Route::delete('/pedidos/{id}', [PedidosController::class, 'destroy'])->name('pedidos.destroy');
+
+// --- Fim das Rotas para Pedidos ---
+
+
 // Rotas para login
-
-
 Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('login', [AuthController::class, 'login']);
 
@@ -54,7 +65,6 @@ Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
 
 // Rotas para login
-
 Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('login', [AuthController::class, 'login']);
 
@@ -69,12 +79,3 @@ Route::post('register', [AuthController::class, 'register']);
 Route::get('register', [AuthController::class, 'showRegistrationForm'])->name('register');
 Route::post('register', [AuthController::class, 'register']);
 
-// Rotas para Usuários
-Route::get('/usuarios/novo', [UsuarioController::class, 'create'])->name('usuarios.create');
-Route::resource('usuarios', UsuarioController::class);
-Route::post('/usuarios/novo', [UsuarioController::class, 'store'])->name('registrar_usuario');
-Route::get('/usuarios/ver/{id}', [UsuarioController::class, 'show'])->name('usuarios.show');
-Route::get('/usuarios/editar/{id}', [UsuarioController::class, 'edit'])->name('usuarios.edit');
-Route::put('/usuarios/{id}', [UsuarioController::class, 'update'])->name('usuarios.update');
-Route::get('/usuarios/delete/{id}', [UsuarioController::class, 'delete'])->name('usuarios.delete');
-Route::delete('/usuarios/{id}', [UsuarioController::class, 'destroy'])->name('usuarios.destroy');

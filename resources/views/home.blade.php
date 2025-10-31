@@ -22,7 +22,8 @@
 
 <body>
 
-    <!-- Menu -->
+    <!-- Menu Dinâmico (Auth/Guest) -->
+    @guest
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
             <a class="navbar-brand" href="#">ProductManager</a>
@@ -41,6 +42,54 @@
             </div>
         </div>
     </nav>
+    @endguest
+
+    @auth
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Store</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAuth" aria-controls="navbarNavAuth" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAuth">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    
+                    <!-- Dropdown Pedidos -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPedidos" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Pedidos
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownPedidos">
+                            <a class="dropdown-item" href="{{ route('pedidos.index') }}">Listar Pedidos</a>
+                            <a class="dropdown-item" href="{{ route('pedidos.create') }}">Criar Pedido</a>
+                        </div>
+                    </li>
+
+                    <!-- Dropdown Produtos -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownProducts" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Produtos
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownProducts">
+                            <a class="dropdown-item" href="{{ route('produtos.index') }}">Listar Produtos</a>
+                            <a class="dropdown-item" href="{{ route('produtos.create') }}">Adicionar Produto</a>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <form action="{{ route('logout') }}" method="POST" style="display:inline;">
+                            @csrf
+                            <!-- Botão de Logout estilizado como link da navbar -->
+                            <button type="submit" class="btn btn-link nav-link" style="color: rgba(255,255,255,.5); text-decoration: none;">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    @endauth
 
     <!-- Hero Section -->
     <div class="hero">
